@@ -18,27 +18,36 @@ USE library_CA1;
 CREATE TABLE LOANS(
 	loan_id INT PRIMARY KEY,
 	customer_id VARCHAR(30),
-	item_type VARCHAR(30),
 	book_id VARCHAR(30),
 	device_id VARCHAR(30),
 	date_borrowed DATE,
 	due_date DATE,
 	return_date DATE
     
--- FKs to be added
+-- FK refrences to be added
     customer_id (FK)
 	book_id (FK)
 	device_id (FK)
 );
+
 -- FINES TABLE
 CREATE TABLE FINES(
 	length_overdue INT PRIMARY KEY,
 	fine_amount DECIMAL(10, 2)
 );
+
 -- WAITLIST TABLE
 CREATE TABLE WAITLIST(
+	waitlist_id INT PRIMARY KEY,
+	customer_id INT,
+	item_id INT,
+	request_date DATE
 
+	-- FK refrences to be added
+	customer_id (FK)
+	item_id (FK)
 );
+
 -- ROOM_RESERVATIONS TABLE
 CREATE TABLE ROOM_RESERVATIONS(
 
