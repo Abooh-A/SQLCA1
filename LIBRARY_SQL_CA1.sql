@@ -25,9 +25,9 @@ CREATE TABLE LOANS(
 	return_date DATE
     
 -- FK refrences to be added
-    customer_id (FK)
-	book_id (FK)
-	device_id (FK)
+    customer_id
+	book_id
+	device_id
 );
 
 -- FINES TABLE
@@ -44,14 +44,23 @@ CREATE TABLE WAITLIST(
 	request_date DATE
 
 	-- FK refrences to be added
-	customer_id (FK)
-	item_id (FK)
+	customer_id
+	item_id
 );
 
 -- ROOM_RESERVATIONS TABLE
 CREATE TABLE ROOM_RESERVATIONS(
+	reservation_id INT PRIMARY KEY,
+	customer_id INT,
+	room_no VARCHAR(30),
+	res_start DATE,
+	res_end DATE
 
+	-- FK refrences to be added
+	customer_id
+	room_no
 );
+
 -- ROOMS TABLE
 CREATE TABLE ROOMS(
 
