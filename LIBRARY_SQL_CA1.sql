@@ -70,17 +70,20 @@ CREATE TABLE ROOMS(
 
 -- CUSTOMERS TABLE
 CREATE TABLE CUSTOMERS(
-customer_id VARCHAR(30) PRIMARY KEY,
-f_name VARCHAR(30) NOT NULL,
-l_name VARCHAR(30) NOT NULL,
-email VARCHAR(30),
-phone_no VARCHAR(30),
-address VARCHAR(30)
+	customer_id VARCHAR(30) PRIMARY KEY,
+	f_name VARCHAR(30) NOT NULL,
+	l_name VARCHAR(30) NOT NULL,
+	email VARCHAR(30),
+	phone_no VARCHAR(30),
+	address VARCHAR(30)
 );
 
 -- BOOK_LOCATION TABLE
 CREATE TABLE BOOK_LOCATION(
-
+	loc_id VARCHAR(30) PRIMARY KEY,
+	section VARCHAR(30), -- field name will need to be changed
+	floor VARCHAR(30),
+	shelf VARCHAR(30),
 );
 
 	-- EESHA
