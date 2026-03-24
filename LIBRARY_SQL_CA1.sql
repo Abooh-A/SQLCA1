@@ -89,15 +89,63 @@ CREATE TABLE BOOK_LOCATION(
 	-- EESHA
 
 -- STAFF_INFO TABLE
+CREATE TABLE STAFF_INFO (
+	staff_id INT(30) PRIMARY KEY,
+	f_name VARCHAR(30) NOT NULL,
+	l_name VARCHAR(30) NOT NULL,
+	ppsn VARCHAR(30) NOT NULL,
+	start_date DATE;
+);
+
 -- STAFF_HR TABLE
--- CONTACTS TABLE
+CREATE TABLE STAFF_HR (
+	staff_id INT(30) PRIMARY KEY,
+	salary DECIMAL(30, 2),
+	role VARCHAR(30),
+	department_id VARCHAR(30); -- FK
+);
+
+--ADRESSES TABLE
+CREATE TABLE CONTACTS (
+	staff_id INT(30) PRIMARY KEY,
+	email VARCHAR(30) NOT NULL,
+	phone_no VARCHAR(30) NOT NULL,
+	emergency_no VARCHAR(30),
+	emergency_contact VARCHAR(30) NOT NULL;
+);
+
+-- ADRESSES TABLE
 CREATE TABLE ADDRESSES(
-	
+	staff_id INT(30) PRIMARY KEY,
+	eircode VARCHAR(30) NOT NULL,
+	street VARCHAR(30),
+	city VARCHAR(30),
+	county VARCHAR(30),
+	house_apt_no INT(30) NOT NULL;
 );
+
+--DEPARTMENTS TABLE
 CREATE TABLE DEPARTMENTS(
-	
+	department_id VARCHAR(30) PRIMARY KEY,
+	name VARCHAR(30) NOT NULL;
 );
--- DEVICE_STATUS TABLE
+
+--DEVICE_STATUS TABLE
+CREATE TABLE DEVICE_STATUS (
+	serial_no VARCHAR(30) PRIMARY KEY,
+	status VARCHAR(30), -- ask what this is about and if i can use enum
+	description VARCHAR(30),
+	last_update DATE,
+	condition VARCHAR(30),
+	loc_id VARCHAR(30); -- FK
+);
+
+--DEVICES TABLE
 CREATE TABLE DEVICES(
-	
+	serial_no VARCHAR(30) PRIMARY KEY,
+	name VARCHAR(30) NOT NULL,
+	brand VARCHAR(30),
+	cost DECIMAL(10, 2) NOT NULL,
+	warranty_end DATE NOT NULL,
+	supplier_id INT(30);
 ); 
