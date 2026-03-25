@@ -14,21 +14,50 @@ USE library_CA1;
 
 	-- ABOOH
 
+-- CUSTOMERS TABLE
+CREATE TABLE CUSTOMERS(
+	customer_id INT PRIMARY KEY,
+	f_name VARCHAR(30) NOT NULL,
+	l_name VARCHAR(30) NOT NULL,
+	email VARCHAR(30),
+	phone_no VARCHAR(30),
+	address VARCHAR(30)
+);
+
+-- ROOMS TABLE
+CREATE TABLE ROOMS(
+	room_no VARCHAR(30) PRIMARY KEY,
+	name VARCHAR(30),
+	floor INT
+);
+
+-- BOOK_LOCATION TABLE
+CREATE TABLE BOOK_LOCATION(
+	loc_id VARCHAR(30) PRIMARY KEY,
+	section VARCHAR(30), -- field name will need to be changed
+	floor VARCHAR(30),
+	shelf VARCHAR(30)
+);
+
 -- LOANS TABLE
 CREATE TABLE LOANS(
 	loan_id INT PRIMARY KEY,
-	customer_id VARCHAR(30),
+	customer_id INT,
 	book_id VARCHAR(30),
 	device_id VARCHAR(30),
 	date_borrowed DATE,
 	due_date DATE,
 	return_date DATE,
     
-    Foreign key(customer_id) references CUSTOMERS(customer_id)
+    Foreign key(customer_id) references CUSTOMERS(customer_id),
 
--- external FK refrences to be added
-	book_id
-	device_id
+-- FK refrences to be added external
+	-- FOREIGN KEY(book_id) REFERENCES BOOK_COPIES(book_id)
+	-- FOREIGN KEY(device_id) REFERENCES DEVICES(device_id)
+
+	CONSTRAINT book_xor_device CHECK ( 
+	(book_id IS NOT NULL AND device_id IS NULL) OR 
+	(book_id IS NULL AND device_id IS NOT NULL) )
 );
 
 -- FINES TABLE
@@ -41,11 +70,13 @@ CREATE TABLE FINES(
 CREATE TABLE WAITLIST(
 	waitlist_id INT PRIMARY KEY,
 	customer_id INT,
-	item_id INT,
+	isbn VARCHAR(30),
 	request_date DATE,
 
 	Foreign key(customer_id) references CUSTOMERS(customer_id),
-	Foreign key(isbn) references BOOKS(isbn)
+
+-- FK refrences to be added external
+	-- FOREIGN KEY(isbn) REFERENCES BOOKS(isbn)
 );
 
 -- ROOM_RESERVATIONS TABLE
@@ -54,35 +85,10 @@ CREATE TABLE ROOM_RESERVATIONS(
 	customer_id INT,
 	room_no VARCHAR(30),
 	res_start DATE,
-	res_end DATE
+	res_end DATE,
 
 	Foreign key(customer_id) references CUSTOMERS(customer_id),
 	Foreign key(room_no) references ROOMS(room_no)
-);
-
--- ROOMS TABLE
-CREATE TABLE ROOMS(
-	room_no VARCHAR(30) PRIMARY KEY,
-	name VARCHAR(30),
-	floor INT
-);
-
--- CUSTOMERS TABLE
-CREATE TABLE CUSTOMERS(
-	customer_id VARCHAR(30) PRIMARY KEY,
-	f_name VARCHAR(30) NOT NULL,
-	l_name VARCHAR(30) NOT NULL,
-	email VARCHAR(30),
-	phone_no VARCHAR(30),
-	address VARCHAR(30)
-);
-
--- BOOK_LOCATION TABLE
-CREATE TABLE BOOK_LOCATION(
-	loc_id VARCHAR(30) PRIMARY KEY,
-	section VARCHAR(30), -- field name will need to be changed
-	floor VARCHAR(30),
-	shelf VARCHAR(30),
 );
 
 	-- EESHA
