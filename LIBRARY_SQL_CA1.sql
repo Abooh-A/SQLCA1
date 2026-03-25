@@ -22,10 +22,11 @@ CREATE TABLE LOANS(
 	device_id VARCHAR(30),
 	date_borrowed DATE,
 	due_date DATE,
-	return_date DATE
+	return_date DATE,
     
--- FK refrences to be added
-    customer_id
+    Foreign key(customer_id) references CUSTOMERS(customer_id)
+
+-- external FK refrences to be added
 	book_id
 	device_id
 );
@@ -41,11 +42,10 @@ CREATE TABLE WAITLIST(
 	waitlist_id INT PRIMARY KEY,
 	customer_id INT,
 	item_id INT,
-	request_date DATE
+	request_date DATE,
 
-	-- FK refrences to be added
-	customer_id
-	item_id
+	Foreign key(customer_id) references CUSTOMERS(customer_id),
+	Foreign key(isbn) references BOOKS(isbn)
 );
 
 -- ROOM_RESERVATIONS TABLE
@@ -56,9 +56,8 @@ CREATE TABLE ROOM_RESERVATIONS(
 	res_start DATE,
 	res_end DATE
 
-	-- FK refrences to be added
-	customer_id
-	room_no
+	Foreign key(customer_id) references CUSTOMERS(customer_id),
+	Foreign key(room_no) references ROOMS(room_no)
 );
 
 -- ROOMS TABLE
