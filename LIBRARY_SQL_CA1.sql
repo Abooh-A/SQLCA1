@@ -2,7 +2,15 @@
 DROP DATABASE IF EXISTS library_CA1;
 CREATE DATABASE library_CA1;
 USE library_CA1;
-	-- JULIETTA
+
+-- BOOK_LOCATION TABLE (ABOOH)
+CREATE TABLE BOOK_LOCATION(
+	loc_id VARCHAR(30) PRIMARY KEY,
+	section VARCHAR(30), -- field name will need to be changed
+	floor VARCHAR(30),
+	shelf VARCHAR(30)
+);
+	-- JULIETA
 
 -- CONDITIONS TABLE
 -- BOOKS_STATUS TABLE
@@ -11,6 +19,16 @@ USE library_CA1;
 -- AUTHORS TABLE
 -- PUBLISHERS TABLE
 -- SUPPLIERS TABLE
+
+--DEVICE_STATUS TABLE (EESHA)
+CREATE TABLE DEVICE_STATUS (
+	serial_no VARCHAR(30) PRIMARY KEY,
+	status VARCHAR(30), -- ask what this is about and if i can use enum
+	description VARCHAR(30),
+	last_update DATE,
+	condition VARCHAR(30),
+	loc_id VARCHAR(30); -- FK
+);
 
 	-- ABOOH
 
@@ -29,14 +47,6 @@ CREATE TABLE ROOMS(
 	room_no VARCHAR(30) PRIMARY KEY,
 	name VARCHAR(30),
 	floor INT
-);
-
--- BOOK_LOCATION TABLE
-CREATE TABLE BOOK_LOCATION(
-	loc_id VARCHAR(30) PRIMARY KEY,
-	section VARCHAR(30), -- field name will need to be changed
-	floor VARCHAR(30),
-	shelf VARCHAR(30)
 );
 
 -- LOANS TABLE
@@ -102,6 +112,12 @@ CREATE TABLE STAFF_INFO (
 	start_date DATE;
 );
 
+--DEPARTMENTS TABLE
+CREATE TABLE DEPARTMENTS(
+	department_id VARCHAR(30) PRIMARY KEY,
+	name VARCHAR(30) NOT NULL;
+);
+
 -- STAFF_HR TABLE
 CREATE TABLE STAFF_HR (
 	staff_id INT(30) PRIMARY KEY,
@@ -127,22 +143,6 @@ CREATE TABLE ADDRESSES(
 	city VARCHAR(30),
 	county VARCHAR(30),
 	house_apt_no INT(30) NOT NULL;
-);
-
---DEPARTMENTS TABLE
-CREATE TABLE DEPARTMENTS(
-	department_id VARCHAR(30) PRIMARY KEY,
-	name VARCHAR(30) NOT NULL;
-);
-
---DEVICE_STATUS TABLE
-CREATE TABLE DEVICE_STATUS (
-	serial_no VARCHAR(30) PRIMARY KEY,
-	status VARCHAR(30), -- ask what this is about and if i can use enum
-	description VARCHAR(30),
-	last_update DATE,
-	condition VARCHAR(30),
-	loc_id VARCHAR(30); -- FK
 );
 
 --DEVICES TABLE
