@@ -43,10 +43,11 @@ CREATE TABLE AUTHORS(
 -- SUPPLIERS TABLE (JULIETA)
 CREATE TABLE SUPPLIERS(
 	supplier_id INT PRIMARY KEY,
+    supplier_name VARCHAR(50) NOT NULL,
     contact_person VARCHAR(100) NOT NULL,
-    address VARCHAR(100), 
-    phone_no INT, -- need to be UQ?
-    email VARCHAR(255) -- need to be UQ?
+    address VARCHAR(255), 
+    phone_no VARCHAR(20) UNIQUE,
+    email VARCHAR(255) UNIQUE
 );
 
 -- LANGUAGES TABLE (JULIETA)
