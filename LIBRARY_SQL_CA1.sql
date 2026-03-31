@@ -3,14 +3,14 @@ DROP DATABASE IF EXISTS library_CA1;
 CREATE DATABASE library_CA1;
 USE library_CA1;
 
+
 -- BOOK_LOCATION TABLE (ABOOH)
 CREATE TABLE BOOK_LOCATION(
 	loc_id VARCHAR(30) PRIMARY KEY,
 	loc_section VARCHAR(30),
 	loc_floor VARCHAR(30),
 	shelf VARCHAR(30)
-);
-	
+);	
     
 -- -- JULIETA -- --
 
@@ -117,9 +117,9 @@ CREATE TABLE DEVICE_STATUS (
 	loc_id VARCHAR(30); -- FK
 );
 
-	-- ABOOH
+	-- -- ABOOH -- --
 
--- CUSTOMERS TABLE
+-- CUSTOMERS TABLE (ABOOH)
 CREATE TABLE CUSTOMERS(
 	customer_id INT PRIMARY KEY,
 	f_name VARCHAR(30) NOT NULL,
@@ -129,14 +129,14 @@ CREATE TABLE CUSTOMERS(
 	address VARCHAR(30)
 );
 
--- ROOMS TABLE
+-- ROOMS TABLE (ABOOH)
 CREATE TABLE ROOMS(
 	room_no VARCHAR(30) PRIMARY KEY,
 	room_name VARCHAR(30),
 	floor INT
 );
 
--- LOANS TABLE
+-- LOANS TABLE (ABOOH)
 CREATE TABLE LOANS(
 	loan_id INT PRIMARY KEY,
 	customer_id INT,
@@ -146,37 +146,33 @@ CREATE TABLE LOANS(
 	due_date DATE,
 	return_date DATE,
     
-    Foreign key(customer_id) references CUSTOMERS(customer_id),
-
--- FK refrences to be added external
-	-- FOREIGN KEY(book_id) REFERENCES BOOK_COPIES(book_id)
-	-- FOREIGN KEY(device_id) REFERENCES DEVICES(device_id)
+    FOREIGN KEY(customer_id) REFERENCES CUSTOMERS(customer_id),
+	FOREIGN KEY(book_id) REFERENCES BOOK_COPIES(book_id),
+	FOREIGN KEY(device_id) REFERENCES DEVICES(device_id),
 
 	CONSTRAINT book_xor_device CHECK ( 
 	(book_id IS NOT NULL AND device_id IS NULL) OR 
 	(book_id IS NULL AND device_id IS NOT NULL) )
 );
 
--- FINES TABLE
+-- FINES TABLE (ABOOH)
 CREATE TABLE FINES(
 	length_overdue INT PRIMARY KEY,
 	fine_amount DECIMAL(10, 2)
 );
 
--- WAITLIST TABLE
+-- WAITLIST TABLE (ABOOH)
 CREATE TABLE WAITLIST(
 	waitlist_id INT PRIMARY KEY,
 	customer_id INT,
 	isbn VARCHAR(30),
 	request_date DATE,
 
-	Foreign key(customer_id) references CUSTOMERS(customer_id),
-
--- FK refrences to be added external
-	-- FOREIGN KEY(isbn) REFERENCES BOOKS(isbn)
+	FOREIGN KEY(customer_id) REFERENCES CUSTOMERS(customer_id),
+	FOREIGN KEY(isbn) REFERENCES BOOKS(isbn)
 );
 
--- ROOM_RESERVATIONS TABLE
+-- ROOM_RESERVATIONS TABLE (ABOOH)
 CREATE TABLE ROOM_RESERVATIONS(
 	reservation_id INT PRIMARY KEY,
 	customer_id INT,
@@ -184,13 +180,14 @@ CREATE TABLE ROOM_RESERVATIONS(
 	res_start DATE,
 	res_end DATE,
 
-	Foreign key(customer_id) references CUSTOMERS(customer_id),
-	Foreign key(room_no) references ROOMS(room_no)
+	FOREIGN KEY(customer_id) REFERENCES CUSTOMERS(customer_id),
+	FOREIGN KEY(room_no) REFERENCES ROOMS(room_no)
 );
+	-- -- END ABOOH -- --
 
-	-- EESHA
+	-- -- EESHA -- --
 
--- STAFF_INFO TABLE
+-- STAFF_INFO TABLE (EESHA)
 CREATE TABLE STAFF_INFO (
 	staff_id INT(30) PRIMARY KEY,
 	f_name VARCHAR(30) NOT NULL,
@@ -199,13 +196,13 @@ CREATE TABLE STAFF_INFO (
 	start_date DATE;
 );
 
--- DEPARTMENTS TABLE
+-- DEPARTMENTS TABLE (EESHA)
 CREATE TABLE DEPARTMENTS(
 	department_id VARCHAR(30) PRIMARY KEY,
 	name VARCHAR(30) NOT NULL
 );
 
--- STAFF_HR TABLE
+-- STAFF_HR TABLE (EESHA)
 CREATE TABLE STAFF_HR (
 	staff_id INT(30) PRIMARY KEY,
 	salary DECIMAL(30, 2),
@@ -213,7 +210,7 @@ CREATE TABLE STAFF_HR (
 	department_id VARCHAR(30); -- FK
 );
 
--- ADRESSES TABLE
+-- ADRESSES TABLE (EESHA)
 CREATE TABLE CONTACTS (
 	staff_id INT(30) PRIMARY KEY,
 	email VARCHAR(30) NOT NULL,
@@ -222,7 +219,7 @@ CREATE TABLE CONTACTS (
 	emergency_contact VARCHAR(30) NOT NULL;
 );
 
--- ADRESSES TABLE
+-- ADRESSES TABLE (EESHA)
 CREATE TABLE ADDRESSES(
 	staff_id INT(30) PRIMARY KEY,
 	eircode VARCHAR(30) NOT NULL,
@@ -232,7 +229,7 @@ CREATE TABLE ADDRESSES(
 	house_apt_no INT(30) NOT NULL;
 );
 
--- DEVICES TABLE
+-- DEVICES TABLE (EESHA)
 CREATE TABLE DEVICES(
 	serial_no VARCHAR(30) PRIMARY KEY,
 	dev_name VARCHAR(30) NOT NULL,
@@ -241,3 +238,4 @@ CREATE TABLE DEVICES(
 	warranty_end DATE NOT NULL,
 	supplier_id INT(30);
 ); 
+-- -- END EESHA -- --
