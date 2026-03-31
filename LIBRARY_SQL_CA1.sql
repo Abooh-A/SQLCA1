@@ -6,7 +6,7 @@ USE library_CA1;
 
 -- BOOK_LOCATION TABLE (ABOOH)
 CREATE TABLE BOOK_LOCATION(
-	loc_id VARCHAR(30) PRIMARY KEY,
+	loc_id INT PRIMARY KEY,
 	loc_section VARCHAR(30),
 	loc_floor VARCHAR(30),
 	shelf VARCHAR(30)
@@ -76,7 +76,7 @@ CREATE TABLE BOOKS(
     FOREIGN KEY(publisher_id) REFERENCES PUBLISHERS(publisher_id),
     FOREIGN KEY(author_id) REFERENCES AUTHORS(author_id),
     FOREIGN KEY(genre) REFERENCES GENRES(genre),
-    FOREIGN KEY(language_book) REFERENCES LENGUAGES(lenguage_book) -- change the name?
+    FOREIGN KEY(language_book) REFERENCES LANGUAGES(language_book) -- change the name?
 );
 
 -- BOOK_COPIES TABLE (JULIETA)
@@ -98,7 +98,7 @@ CREATE TABLE BOOKS_STATUS(
     status_desc VARCHAR(20) NOT NULL,
     condition_desc VARCHAR(20) NOT NULL,
     loc_id INT NOT NULL,
-    FOREIGN KEY(book_id) REFERENCES BOOK_COPIES(books_id),
+    FOREIGN KEY(book_id) REFERENCES BOOK_COPIES(book_id),
     FOREIGN KEY(status_desc) REFERENCES STATUSES(status_desc),
     FOREIGN KEY(condition_desc) REFERENCES CONDITIONS(condition_desc),
     FOREIGN KEY(loc_id) REFERENCES BOOK_LOCATION(loc_id)
@@ -116,6 +116,16 @@ CREATE TABLE DEVICE_STATUS (
 	condition VARCHAR(30),
 	loc_id VARCHAR(30); -- FK
 );
+
+-- DEVICES TABLE (EESHA)
+CREATE TABLE DEVICES(
+	serial_no VARCHAR(30) PRIMARY KEY,
+	dev_name VARCHAR(30) NOT NULL,
+	brand VARCHAR(30),
+	cost DECIMAL(10, 2) NOT NULL,
+	warranty_end DATE NOT NULL,
+	supplier_id INT(30);
+); 
 
 	-- -- ABOOH -- --
 
@@ -140,7 +150,7 @@ CREATE TABLE ROOMS(
 CREATE TABLE LOANS(
 	loan_id INT PRIMARY KEY,
 	customer_id INT,
-	book_id VARCHAR(30),
+	book_id INT,
 	device_id VARCHAR(30),
 	date_borrowed DATE,
 	due_date DATE,
@@ -148,7 +158,7 @@ CREATE TABLE LOANS(
     
     FOREIGN KEY(customer_id) REFERENCES CUSTOMERS(customer_id),
 	FOREIGN KEY(book_id) REFERENCES BOOK_COPIES(book_id),
-	FOREIGN KEY(device_id) REFERENCES DEVICES(device_id),
+	FOREIGN KEY(device_id) REFERENCES DEVICES(serial_no),
 
 	CONSTRAINT book_xor_device CHECK ( 
 	(book_id IS NOT NULL AND device_id IS NULL) OR 
@@ -228,14 +238,4 @@ CREATE TABLE ADDRESSES(
 	county VARCHAR(30),
 	house_apt_no INT(30) NOT NULL;
 );
-
--- DEVICES TABLE (EESHA)
-CREATE TABLE DEVICES(
-	serial_no VARCHAR(30) PRIMARY KEY,
-	dev_name VARCHAR(30) NOT NULL,
-	brand VARCHAR(30),
-	cost DECIMAL(10, 2) NOT NULL,
-	warranty_end DATE NOT NULL,
-	supplier_id INT(30);
-); 
 -- -- END EESHA -- --
