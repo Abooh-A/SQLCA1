@@ -16,11 +16,28 @@ CREATE TABLE BOOK_LOCATION(
 -- BOOKS_STATUS TABLE
 -- BOOK_COPIES TABLE
 -- BOOKS TABLE
+CREATE TABLE BOOKS(
+	isbn VARCHAR(13) PRIMARY KEY, -- ISBN are 13 digits long
+    book_name VARCHAR(150) NOT NULL,
+    edition VARCHAR(30),
+    book_language VARCHAR(30),
+    published_date DATE,
+    publisher_id INT,
+    author_id INT,
+    genre VARCHAR(30),
+    FOREIGN KEY(publisher_id) REFERENCES Publishers(publisher_id),
+    FOREIGN KEY(author_id) REFERENCES Authors(author_id)
+);
+
+
+
 -- AUTHORS TABLE
 -- PUBLISHERS TABLE
 -- SUPPLIERS TABLE
+-- LANGUAGES TABLE
+-- GENRE TABLE
 
---DEVICE_STATUS TABLE (EESHA)
+-- DEVICE_STATUS TABLE (EESHA)
 CREATE TABLE DEVICE_STATUS (
 	serial_no VARCHAR(30) PRIMARY KEY,
 	status VARCHAR(30), -- ask what this is about and if i can use enum
