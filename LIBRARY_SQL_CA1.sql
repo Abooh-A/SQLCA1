@@ -11,20 +11,43 @@ CREATE TABLE BOOK_LOCATION(
 	shelf VARCHAR(30)
 );
 	
-    -- JULIETA --
+-- -- JULIETA -- --
 
--- CONDITIONS TABLE
+-- CONDITIONS TABLE (JULIETA) --> used by Books and Devices
 CREATE TABLE CONDITIONS(
-	condition_status VARCHAR(20) PRIMARY KEY
+	condition_desc VARCHAR(20) PRIMARY KEY
 );
 
--- BOOKS_STATUS TABLE
+-- STATUSES TABLE (JULIETA) --> used by Books and Devices
+CREATE TABLE STATUSES(
+	status_desc VARCHAR(20) PRIMARY KEY
+);
+
+-- BOOKS_STATUS TABLE (JULIETA)
 CREATE TABLE BOOKS_STATUS(
-
+	book_id INT PRIMARY KEY,
+    status_desc VARCHAR(20) NOT NULL,
+    condition_desc VARCHAR(20) NOT NULL,
+    loc_id INT NOT NULL,
+    FOREIGN KEY(status_desc) REFERENCES STATUSES(status_desc),
+    FOREIGN KEY(condition_desc) REFERENCES CONDITIONS(condition_desc)
 );
 
--- BOOK_COPIES TABLE
--- BOOKS TABLE
+-- AUTHORS TABLE (JULIETA)
+CREATE TABLE AUTHORS(
+	author_id INT PRIMARY KEY,
+    author_name VARCHAR(100) NOT NULL,
+    publisher_id INT,
+	FOREIGN KEY (publisher_id) REFERENCES PUBLISHERS(publisher_id)
+);
+
+-- PUBLISHERS TABLE (JULIETA)
+CREATE TABLE PUBLISHERS(
+	publisher_id INT PRIMARY KEY,
+    publisher_name VARCHAR(100) NOT NULL
+);
+
+-- BOOKS TABLE (JULIETA)
 CREATE TABLE BOOKS(
 	isbn VARCHAR(13) PRIMARY KEY, -- ISBN are 13 digits long
     book_name VARCHAR(150) NOT NULL,
@@ -34,28 +57,38 @@ CREATE TABLE BOOKS(
     publisher_id INT,
     author_id INT,
     genre VARCHAR(30),
-    FOREIGN KEY(publisher_id) REFERENCES Publishers(publisher_id),
-    FOREIGN KEY(author_id) REFERENCES Authors(author_id)
+    FOREIGN KEY(publisher_id) REFERENCES PUBLISHERS(publisher_id),
+    FOREIGN KEY(author_id) REFERENCES AUTHORS(author_id)
     -- Add FOREIGN KEY for Languages and Genre
 );
 
--- AUTHORS TABLE
-CREATE TABLE AUTHORS(
-	author_id INT PRIMARY KEY,
-    author_name VARCHAR(100) NOT NULL,
+-- BOOK_COPIES TABLE (JULIETA)
+
+
+
+-- BOOKS TABLE (JULIETA)
+CREATE TABLE BOOKS(
+	isbn VARCHAR(13) PRIMARY KEY, -- ISBN are 13 digits long
+    book_name VARCHAR(150) NOT NULL,
+    edition VARCHAR(30),
+    book_language VARCHAR(30),
+    published_date DATE,
     publisher_id INT,
-	FOREIGN KEY (publisher_id) REFERENCES Publishers(publisher_id)
+    author_id INT,
+    genre VARCHAR(30),
+    FOREIGN KEY(publisher_id) REFERENCES PUBLISHERS(publisher_id),
+    FOREIGN KEY(author_id) REFERENCES AUTHORS(author_id)
+    -- Add FOREIGN KEY for Languages and Genre
 );
 
--- PUBLISHERS TABLE
-CREATE TABLE PUBLISHERS(
-	publisher_id INT PRIMARY KEY,
-    publisher_name VARCHAR(100) NOT NULL
-);
 
--- SUPPLIERS TABLE
--- LANGUAGES TABLE
--- GENRE TABLE
+
+-- SUPPLIERS TABLE (JULIETA)
+-- LANGUAGES TABLE (JULIETA)
+-- GENRE TABLE (JULIETA)
+
+
+
 
 -- DEVICE_STATUS TABLE (EESHA)
 CREATE TABLE DEVICE_STATUS (
