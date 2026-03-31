@@ -6,8 +6,8 @@ USE library_CA1;
 -- BOOK_LOCATION TABLE (ABOOH)
 CREATE TABLE BOOK_LOCATION(
 	loc_id VARCHAR(30) PRIMARY KEY,
-	section VARCHAR(30), -- field name will need to be changed
-	floor VARCHAR(30),
+	loc_section VARCHAR(30),
+	loc_floor VARCHAR(30),
 	shelf VARCHAR(30)
 );
 	
@@ -82,7 +82,7 @@ CREATE TABLE CUSTOMERS(
 -- ROOMS TABLE
 CREATE TABLE ROOMS(
 	room_no VARCHAR(30) PRIMARY KEY,
-	name VARCHAR(30),
+	room_name VARCHAR(30),
 	floor INT
 );
 
