@@ -45,8 +45,8 @@ CREATE TABLE SUPPLIERS(
 	supplier_id INT PRIMARY KEY,
     contact_person VARCHAR(100) NOT NULL,
     address VARCHAR(100), 
-    phone_no INT, -- need to be UQ
-    email VARCHAR(255) -- need to be UQ
+    phone_no INT, -- need to be UQ?
+    email VARCHAR(255) -- need to be UQ?
 );
 
 -- LANGUAGES TABLE (JULIETA)
@@ -67,19 +67,20 @@ CREATE TABLE BOOKS(
 	isbn VARCHAR(13) PRIMARY KEY, -- ISBN are 13 digits long
     book_name VARCHAR(150) NOT NULL,
     edition VARCHAR(30),
-    book_language VARCHAR(30),
-    published_date DATE,
+    language_book VARCHAR(30),
+    published_date YEAR,
     publisher_id INT,
     author_id INT,
     genre VARCHAR(30),
     FOREIGN KEY(publisher_id) REFERENCES PUBLISHERS(publisher_id),
     FOREIGN KEY(author_id) REFERENCES AUTHORS(author_id),
     FOREIGN KEY(genre) REFERENCES GENRES(genre),
-    FOREIGN KEY(book_language) REFERENCES LENGUAGES(lenguage_book) -- change the name?
+    FOREIGN KEY(language_book) REFERENCES LENGUAGES(lenguage_book) -- change the name?
 );
 
 -- BOOK_COPIES TABLE (JULIETA)
 -- register of all the copies (including more than one copy of the same book)
+-- here the book_id is created
 CREATE TABLE BOOK_COPIES(
 	book_id INT AUTO_INCREMENT PRIMARY KEY,
 	isbn VARCHAR(13) NOT NULL,
@@ -90,15 +91,16 @@ CREATE TABLE BOOK_COPIES(
 );
 
 -- BOOKS_STATUS TABLE (JULIETA)
--- status 
+-- all the information about the status, conditions and locations of a book (a physical copy)   
 CREATE TABLE BOOKS_STATUS(
 	book_id INT PRIMARY KEY,
     status_desc VARCHAR(20) NOT NULL,
     condition_desc VARCHAR(20) NOT NULL,
     loc_id INT NOT NULL,
+    FOREIGN KEY(book_id) REFERENCES BOOK_COPIES(books_id),
     FOREIGN KEY(status_desc) REFERENCES STATUSES(status_desc),
     FOREIGN KEY(condition_desc) REFERENCES CONDITIONS(condition_desc),
-    FOREIGN KEY(book_id) REFERENCES BOOK_COPIES(books_id)
+    FOREIGN KEY(loc_id) REFERENCES BOOK_LOCATION(loc_id)
 );
 
 -- -- END JULIETA -- ---
