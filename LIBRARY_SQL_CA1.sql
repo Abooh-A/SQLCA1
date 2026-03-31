@@ -11,83 +11,97 @@ CREATE TABLE BOOK_LOCATION(
 	shelf VARCHAR(30)
 );
 	
+    
 -- -- JULIETA -- --
 
 -- CONDITIONS TABLE (JULIETA) --> used by Books and Devices
+-- list of different conditions
 CREATE TABLE CONDITIONS(
 	condition_desc VARCHAR(20) PRIMARY KEY
 );
 
 -- STATUSES TABLE (JULIETA) --> used by Books and Devices
+-- list of different statuses 
 CREATE TABLE STATUSES(
 	status_desc VARCHAR(20) PRIMARY KEY
 );
 
+-- PUBLISHERS TABLE (JULIETA)
+CREATE TABLE PUBLISHERS(
+	publisher_id INT AUTO_INCREMENT PRIMARY KEY,
+    publisher_name VARCHAR(100) NOT NULL
+);
+
+-- AUTHORS TABLE (JULIETA)
+CREATE TABLE AUTHORS(
+	author_id INT AUTO_INCREMENT PRIMARY KEY,
+    author_name VARCHAR(100) NOT NULL,
+    publisher_id INT,
+	FOREIGN KEY (publisher_id) REFERENCES PUBLISHERS(publisher_id)
+);
+
+-- SUPPLIERS TABLE (JULIETA)
+CREATE TABLE SUPPLIERS(
+	supplier_id INT PRIMARY KEY,
+    contact_person VARCHAR(100) NOT NULL,
+    address VARCHAR(100), 
+    phone_no INT, -- need to be UQ
+    email VARCHAR(255) -- need to be UQ
+);
+
+-- LANGUAGES TABLE (JULIETA)
+-- list of languages
+CREATE TABLE LANGUAGES(
+	language_book VARCHAR(20) PRIMARY KEY
+);
+
+-- GENRE TABLE (JULIETA)
+-- list of genres 
+CREATE TABLE GENRES(
+	genre VARCHAR(20) PRIMARY KEY
+);
+
+-- BOOKS TABLE (JULIETA)
+-- all the information about a book 
+CREATE TABLE BOOKS(
+	isbn VARCHAR(13) PRIMARY KEY, -- ISBN are 13 digits long
+    book_name VARCHAR(150) NOT NULL,
+    edition VARCHAR(30),
+    book_language VARCHAR(30),
+    published_date DATE,
+    publisher_id INT,
+    author_id INT,
+    genre VARCHAR(30),
+    FOREIGN KEY(publisher_id) REFERENCES PUBLISHERS(publisher_id),
+    FOREIGN KEY(author_id) REFERENCES AUTHORS(author_id),
+    FOREIGN KEY(genre) REFERENCES GENRES(genre),
+    FOREIGN KEY(book_language) REFERENCES LENGUAGES(lenguage_book) -- change the name?
+);
+
+-- BOOK_COPIES TABLE (JULIETA)
+-- register of all the copies (including more than one copy of the same book)
+CREATE TABLE BOOK_COPIES(
+	book_id INT AUTO_INCREMENT PRIMARY KEY,
+	isbn VARCHAR(13) NOT NULL,
+    supplier_id INT, 
+    cost DECIMAL,
+    FOREIGN KEY(isbn) REFERENCES BOOKS(isbn),
+	FOREIGN KEY(supplier_id) REFERENCES SUPPLIERS(supplier_id)
+);
+
 -- BOOKS_STATUS TABLE (JULIETA)
+-- status 
 CREATE TABLE BOOKS_STATUS(
 	book_id INT PRIMARY KEY,
     status_desc VARCHAR(20) NOT NULL,
     condition_desc VARCHAR(20) NOT NULL,
     loc_id INT NOT NULL,
     FOREIGN KEY(status_desc) REFERENCES STATUSES(status_desc),
-    FOREIGN KEY(condition_desc) REFERENCES CONDITIONS(condition_desc)
+    FOREIGN KEY(condition_desc) REFERENCES CONDITIONS(condition_desc),
+    FOREIGN KEY(book_id) REFERENCES BOOK_COPIES(books_id)
 );
 
--- AUTHORS TABLE (JULIETA)
-CREATE TABLE AUTHORS(
-	author_id INT PRIMARY KEY,
-    author_name VARCHAR(100) NOT NULL,
-    publisher_id INT,
-	FOREIGN KEY (publisher_id) REFERENCES PUBLISHERS(publisher_id)
-);
-
--- PUBLISHERS TABLE (JULIETA)
-CREATE TABLE PUBLISHERS(
-	publisher_id INT PRIMARY KEY,
-    publisher_name VARCHAR(100) NOT NULL
-);
-
--- BOOKS TABLE (JULIETA)
-CREATE TABLE BOOKS(
-	isbn VARCHAR(13) PRIMARY KEY, -- ISBN are 13 digits long
-    book_name VARCHAR(150) NOT NULL,
-    edition VARCHAR(30),
-    book_language VARCHAR(30),
-    published_date DATE,
-    publisher_id INT,
-    author_id INT,
-    genre VARCHAR(30),
-    FOREIGN KEY(publisher_id) REFERENCES PUBLISHERS(publisher_id),
-    FOREIGN KEY(author_id) REFERENCES AUTHORS(author_id)
-    -- Add FOREIGN KEY for Languages and Genre
-);
-
--- BOOK_COPIES TABLE (JULIETA)
-
-
-
--- BOOKS TABLE (JULIETA)
-CREATE TABLE BOOKS(
-	isbn VARCHAR(13) PRIMARY KEY, -- ISBN are 13 digits long
-    book_name VARCHAR(150) NOT NULL,
-    edition VARCHAR(30),
-    book_language VARCHAR(30),
-    published_date DATE,
-    publisher_id INT,
-    author_id INT,
-    genre VARCHAR(30),
-    FOREIGN KEY(publisher_id) REFERENCES PUBLISHERS(publisher_id),
-    FOREIGN KEY(author_id) REFERENCES AUTHORS(author_id)
-    -- Add FOREIGN KEY for Languages and Genre
-);
-
-
-
--- SUPPLIERS TABLE (JULIETA)
--- LANGUAGES TABLE (JULIETA)
--- GENRE TABLE (JULIETA)
-
-
+-- -- END JULIETA -- ---
 
 
 -- DEVICE_STATUS TABLE (EESHA)
