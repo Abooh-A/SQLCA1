@@ -221,16 +221,20 @@ CREATE TABLE STAFF_HR (
 	staff_id INT(30) PRIMARY KEY,
 	salary DECIMAL(30, 2),
 	staff_role VARCHAR(30),
-	FOREIGN KEY (department_id) REFERENCES STAFF_HR(department_id)
+	FOREIGN KEY (department_id) REFERENCES STAFF_HR(department_id),
+
+	FOREIGN KEY (staff_id) REFERENCES STAFF_INFOR(staff_id)
 );
 
--- ADRESSES TABLE (EESHA)
+-- CONTACTS TABLE (EESHA)
 CREATE TABLE CONTACTS (
 	staff_id INT(30) PRIMARY KEY,
 	email VARCHAR(30) NOT NULL,
 	phone_no VARCHAR(30) NOT NULL,
 	emergency_no VARCHAR(30),
-	emergency_contact VARCHAR(30) NOT NULL
+	emergency_contact VARCHAR(30) NOT NULL,
+
+	FOREIGN KEY (staff_id) REFERENCES STAFF_INFOR(staff_id)
 );
 
 -- ADRESSES TABLE (EESHA)
