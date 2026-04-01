@@ -114,11 +114,11 @@ CREATE TABLE BOOKS_STATUS(
 -- DEVICE_STATUS TABLE (EESHA)
 CREATE TABLE DEVICE_STATUS (
 	serial_no VARCHAR(30) PRIMARY KEY,
-	status VARCHAR(30), -- ask what this is about and if i can use enum
+	status VARCHAR(30), 	
 	description VARCHAR(30),
 	last_update DATE,
 	condition VARCHAR(30),
-	loc_id VARCHAR(30) -- FK
+	FOREIGN KEY (loc_id) REFERENCES BOOK_LOCATION(loc_id)
 );
 
 -- DEVICES TABLE (EESHA)
@@ -213,15 +213,15 @@ CREATE TABLE STAFF_INFO (
 -- DEPARTMENTS TABLE (EESHA)
 CREATE TABLE DEPARTMENTS(
 	department_id VARCHAR(30) PRIMARY KEY,
-	name VARCHAR(30) NOT NULL
+	dep_name VARCHAR(30) NOT NULL
 );
 
 -- STAFF_HR TABLE (EESHA)
 CREATE TABLE STAFF_HR (
 	staff_id INT(30) PRIMARY KEY,
 	salary DECIMAL(30, 2),
-	role VARCHAR(30),
-	department_id VARCHAR(30) -- FK
+	staff_role VARCHAR(30),
+	FOREIGN KEY (department_id) REFERENCES STAFF_HR(department_id)
 );
 
 -- ADRESSES TABLE (EESHA)
@@ -241,5 +241,7 @@ CREATE TABLE ADDRESSES(
 	city VARCHAR(30),
 	county VARCHAR(30),
 	house_apt_no INT(30) NOT NULL
+
+	FOREIGN KEY(staff_id) REFERENCES STAFF(staff_id)
 );
 -- -- END EESHA -- --
