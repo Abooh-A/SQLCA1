@@ -114,7 +114,7 @@ CREATE TABLE DEVICE_STATUS (
 	description VARCHAR(30),
 	last_update DATE,
 	condition VARCHAR(30),
-	loc_id VARCHAR(30); -- FK
+	loc_id VARCHAR(30) -- FK
 );
 
 -- DEVICES TABLE (EESHA)
@@ -124,7 +124,7 @@ CREATE TABLE DEVICES(
 	brand VARCHAR(30),
 	cost DECIMAL(10, 2) NOT NULL,
 	warranty_end DATE NOT NULL,
-	supplier_id INT(30);
+	supplier_id INT(30)
 ); 
 
 	-- -- ABOOH -- --
@@ -203,7 +203,7 @@ CREATE TABLE STAFF_INFO (
 	f_name VARCHAR(30) NOT NULL,
 	l_name VARCHAR(30) NOT NULL,
 	ppsn VARCHAR(30) NOT NULL,
-	start_date DATE;
+	start_date DATE
 );
 
 -- DEPARTMENTS TABLE (EESHA)
@@ -217,7 +217,7 @@ CREATE TABLE STAFF_HR (
 	staff_id INT(30) PRIMARY KEY,
 	salary DECIMAL(30, 2),
 	role VARCHAR(30),
-	department_id VARCHAR(30); -- FK
+	department_id VARCHAR(30) -- FK
 );
 
 -- ADRESSES TABLE (EESHA)
@@ -226,7 +226,7 @@ CREATE TABLE CONTACTS (
 	email VARCHAR(30) NOT NULL,
 	phone_no VARCHAR(30) NOT NULL,
 	emergency_no VARCHAR(30),
-	emergency_contact VARCHAR(30) NOT NULL;
+	emergency_contact VARCHAR(30) NOT NULL
 );
 
 -- ADRESSES TABLE (EESHA)
@@ -236,6 +236,6 @@ CREATE TABLE ADDRESSES(
 	street VARCHAR(30),
 	city VARCHAR(30),
 	county VARCHAR(30),
-	house_apt_no INT(30) NOT NULL;
+	house_apt_no INT(30) NOT NULL
 );
 -- -- END EESHA -- --
