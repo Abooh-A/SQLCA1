@@ -25,7 +25,7 @@ CREATE TABLE CONDITIONS(
 -- list of different statuses 
 CREATE TABLE STATUSES(
 	status_id INT AUTO_INCREMENT PRIMARY KEY,
-	status_desc VARCHAR(20) PRIMARY KEY
+	status_desc VARCHAR(20)
 );
 
 -- PUBLISHERS TABLE (JULIETA)
@@ -56,14 +56,14 @@ CREATE TABLE SUPPLIERS(
 -- list of languages
 CREATE TABLE LANGUAGES(
 	language_id INT AUTO_INCREMENT PRIMARY KEY,
-	language_book VARCHAR(20) PRIMARY KEY
+	language_book VARCHAR(20)
 );
 
 -- GENRE TABLE (JULIETA)
 -- list of genres 
 CREATE TABLE GENRES(
 	genre_id INT AUTO_INCREMENT PRIMARY KEY,
-	genre VARCHAR(20) PRIMARY KEY
+	genre VARCHAR(20)
 );
 
 -- BOOKS TABLE (JULIETA)
@@ -80,7 +80,7 @@ CREATE TABLE BOOKS(
     FOREIGN KEY(publisher_id) REFERENCES PUBLISHERS(publisher_id),
     FOREIGN KEY(author_id) REFERENCES AUTHORS(author_id),
     FOREIGN KEY(genre_id) REFERENCES GENRES(genre_id),
-    FOREIGN KEY(languages_id) REFERENCES LANGUAGES(languages_id) -- change the name?
+    FOREIGN KEY(language_id) REFERENCES LANGUAGES(language_id) -- change the name?
 );
 
 -- BOOK_COPIES TABLE (JULIETA)
@@ -118,6 +118,7 @@ CREATE TABLE DEVICE_STATUS (
 	descriptions VARCHAR(60),
 	last_update DATE,
 	condition_id INT,
+    loc_id INT,
     
 	FOREIGN KEY (loc_id) REFERENCES BOOK_LOCATION(loc_id),
     FOREIGN KEY (status_id) REFERENCES STATUSES(status_id),
@@ -226,9 +227,10 @@ CREATE TABLE STAFF_HR (
 	staff_id INT(30) PRIMARY KEY,
 	salary DECIMAL(30, 2),
 	staff_role VARCHAR(30),
-	FOREIGN KEY (department_id) REFERENCES STAFF_HR(department_id),
-
-	FOREIGN KEY (staff_id) REFERENCES STAFF_INFOR(staff_id)
+    department_id INT,
+    
+	FOREIGN KEY (department_id) REFERENCES DEPARTMENTS(department_id),
+	FOREIGN KEY (staff_id) REFERENCES STAFF_INFO(staff_id)
 );
 
 -- CONTACTS TABLE (EESHA)
@@ -239,7 +241,7 @@ CREATE TABLE CONTACTS (
 	emergency_no VARCHAR(30),
 	emergency_contact VARCHAR(30) NOT NULL,
 
-	FOREIGN KEY (staff_id) REFERENCES STAFF_INFOR(staff_id)
+	FOREIGN KEY (staff_id) REFERENCES STAFF_INFO(staff_id)
 );
 
 -- ADRESSES TABLE (EESHA)
@@ -251,6 +253,6 @@ CREATE TABLE ADDRESSES(
 	county VARCHAR(30),
 	house_apt_no INT(30) NOT NULL,
 
-	FOREIGN KEY(staff_id) REFERENCES STAFF(staff_id)
+	FOREIGN KEY(staff_id) REFERENCES STAFF_INFO(staff_id)
 );
 -- -- END EESHA -- --
