@@ -114,10 +114,10 @@ CREATE TABLE BOOKS_STATUS(
 -- DEVICE_STATUS TABLE (EESHA)
 CREATE TABLE DEVICE_STATUS (
 	serial_no VARCHAR(30) PRIMARY KEY,
-	status VARCHAR(30), 	
-	description VARCHAR(30),
+	status_id INT, 	
+	descriptions VARCHAR(30),
 	last_update DATE,
-	condition VARCHAR(30),
+	condition_id INT,
 	FOREIGN KEY (loc_id) REFERENCES BOOK_LOCATION(loc_id)
 );
 
@@ -244,7 +244,7 @@ CREATE TABLE ADDRESSES(
 	street VARCHAR(30),
 	city VARCHAR(30),
 	county VARCHAR(30),
-	house_apt_no INT(30) NOT NULL
+	house_apt_no INT(30) NOT NULL,
 
 	FOREIGN KEY(staff_id) REFERENCES STAFF(staff_id)
 );
