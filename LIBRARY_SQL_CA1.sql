@@ -115,10 +115,13 @@ CREATE TABLE BOOKS_STATUS(
 CREATE TABLE DEVICE_STATUS (
 	serial_no VARCHAR(30) PRIMARY KEY,
 	status_id INT, 	
-	descriptions VARCHAR(30),
+	descriptions VARCHAR(60),
 	last_update DATE,
 	condition_id INT,
-	FOREIGN KEY (loc_id) REFERENCES BOOK_LOCATION(loc_id)
+    
+	FOREIGN KEY (loc_id) REFERENCES BOOK_LOCATION(loc_id),
+    FOREIGN KEY (status_id) REFERENCES STATUSES(status_id),
+    FOREIGN KEY (condition_id) REFERENCES CONDITIONS(condition_id)
 );
 
 -- DEVICES TABLE (EESHA)
@@ -126,9 +129,11 @@ CREATE TABLE DEVICES(
 	serial_no VARCHAR(30) PRIMARY KEY,
 	dev_name VARCHAR(30) NOT NULL,
 	brand VARCHAR(30),
-	cost DECIMAL(10, 2) NOT NULL,
+	cost DECIMAL(10, 2),
 	warranty_end DATE NOT NULL,
-	supplier_id INT(30)
+	supplier_id INT,
+    
+    FOREIGN KEY (supplier_id) REFERENCES SUPPLIERS(supplier_id)
 ); 
 
 	-- -- ABOOH -- --
