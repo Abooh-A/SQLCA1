@@ -17,12 +17,14 @@ CREATE TABLE BOOK_LOCATION(
 -- CONDITIONS TABLE (JULIETA) --> used by Books and Devices
 -- list of different conditions
 CREATE TABLE CONDITIONS(
-	condition_desc VARCHAR(20) PRIMARY KEY
+	condition_id INT AUTO_INCREMENT PRIMARY KEY,
+	condition_desc VARCHAR(20)
 );
 
 -- STATUSES TABLE (JULIETA) --> used by Books and Devices
 -- list of different statuses 
 CREATE TABLE STATUSES(
+	status_id INT AUTO_INCREMENT PRIMARY KEY,
 	status_desc VARCHAR(20) PRIMARY KEY
 );
 
@@ -53,12 +55,14 @@ CREATE TABLE SUPPLIERS(
 -- LANGUAGES TABLE (JULIETA)
 -- list of languages
 CREATE TABLE LANGUAGES(
+	language_id INT AUTO_INCREMENT PRIMARY KEY,
 	language_book VARCHAR(20) PRIMARY KEY
 );
 
 -- GENRE TABLE (JULIETA)
 -- list of genres 
 CREATE TABLE GENRES(
+	genre_id INT AUTO_INCREMENT PRIMARY KEY,
 	genre VARCHAR(20) PRIMARY KEY
 );
 
@@ -68,15 +72,15 @@ CREATE TABLE BOOKS(
 	isbn VARCHAR(13) PRIMARY KEY, -- ISBN are 13 digits long
     book_name VARCHAR(150) NOT NULL,
     edition VARCHAR(30),
-    language_book VARCHAR(30),
+    language_id INT,
     published_date YEAR,
     publisher_id INT,
-    author_id INT,
-    genre VARCHAR(30),
+    author_id INT NOT NULL,
+    genre_id INT NOT NULL,
     FOREIGN KEY(publisher_id) REFERENCES PUBLISHERS(publisher_id),
     FOREIGN KEY(author_id) REFERENCES AUTHORS(author_id),
-    FOREIGN KEY(genre) REFERENCES GENRES(genre),
-    FOREIGN KEY(language_book) REFERENCES LANGUAGES(language_book) -- change the name?
+    FOREIGN KEY(genre_id) REFERENCES GENRES(genre_id),
+    FOREIGN KEY(languages_id) REFERENCES LANGUAGES(languages_id) -- change the name?
 );
 
 -- BOOK_COPIES TABLE (JULIETA)
@@ -95,12 +99,12 @@ CREATE TABLE BOOK_COPIES(
 -- all the information about the status, conditions and locations of a book (a physical copy)   
 CREATE TABLE BOOKS_STATUS(
 	book_id INT PRIMARY KEY,
-    status_desc VARCHAR(20) NOT NULL,
-    condition_desc VARCHAR(20) NOT NULL,
+    status_id INT NOT NULL,
+    condition_id INT NOT NULL,
     loc_id INT NOT NULL,
     FOREIGN KEY(book_id) REFERENCES BOOK_COPIES(book_id),
-    FOREIGN KEY(status_desc) REFERENCES STATUSES(status_desc),
-    FOREIGN KEY(condition_desc) REFERENCES CONDITIONS(condition_desc),
+    FOREIGN KEY(status_id) REFERENCES STATUSES(status_id),
+    FOREIGN KEY(condition_id) REFERENCES CONDITIONS(condition_id),
     FOREIGN KEY(loc_id) REFERENCES BOOK_LOCATION(loc_id)
 );
 
