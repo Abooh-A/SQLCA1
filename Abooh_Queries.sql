@@ -21,7 +21,7 @@ LEFT JOIN WAITLIST W ON C.customer_id = W.customer_id
 LEFT JOIN ROOM_RESERVATIONS R ON C.customer_id = R.customer_id
 WHERE DATEDIFF(IF(L.return_date IS NULL, CURDATE(), L.return_date), L.due_date) > 0
 GROUP BY C.customer_id, C.f_name, C.l_name
-HAVING SUM(F.fine_amount) > 50
+HAVING SUM(F.fine_amount) > 20
 ORDER BY total_fines DESC;
 
 
