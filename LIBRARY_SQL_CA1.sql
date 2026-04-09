@@ -110,6 +110,13 @@ CREATE TABLE BOOKS_STATUS(
 
 -- -- END JULIETA -- ---
 
+-- ROOMS TABLE (ABOOH)
+CREATE TABLE ROOMS(
+    room_id INT AUTO_INCREMENT PRIMARY KEY,
+    room_name VARCHAR(30),
+    floor INT
+);
+
 -- DEVICES TABLE (EESHA)
 CREATE TABLE DEVICES(
 	serial_no VARCHAR(30) PRIMARY KEY,
@@ -129,10 +136,10 @@ CREATE TABLE DEVICE_STATUS (
 	descriptions VARCHAR(60),
 	last_update DATE,
 	condition_id INT,
-    loc_id INT,
+    room_id INT,
     
     FOREIGN KEY (serial_no) REFERENCES DEVICES(serial_no),
-	FOREIGN KEY (loc_id) REFERENCES BOOK_LOCATION(loc_id),
+	FOREIGN KEY (room_id) REFERENCES ROOMS(room_id), 
     FOREIGN KEY (status_id) REFERENCES STATUSES(status_id),
     FOREIGN KEY (condition_id) REFERENCES CONDITIONS(condition_id)
     
@@ -159,13 +166,6 @@ CREATE TABLE CUSTOMER_ADDRESSES(
 	eircode VARCHAR(30) NOT NULL,
 
 	FOREIGN KEY(customer_id) REFERENCES CUSTOMERS(customer_id)
-);
-
--- ROOMS TABLE (ABOOH)
-CREATE TABLE ROOMS(
-	room_no VARCHAR(30) PRIMARY KEY,
-	room_name VARCHAR(30),
-	floor INT
 );
 
 -- LOANS TABLE (ABOOH)
@@ -206,14 +206,14 @@ CREATE TABLE WAITLIST(
 
 -- ROOM_RESERVATIONS TABLE (ABOOH)
 CREATE TABLE ROOM_RESERVATIONS(
-	reservation_id INT AUTO_INCREMENT PRIMARY KEY,
-	customer_id INT,
-	room_no VARCHAR(30),
-	res_start DATE,
-	res_end DATE,
+    reservation_id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_id INT,
+    room_id INT,
+    res_start DATE,
+    res_end DATE,
 
-	FOREIGN KEY(customer_id) REFERENCES CUSTOMERS(customer_id),
-	FOREIGN KEY(room_no) REFERENCES ROOMS(room_no)
+    FOREIGN KEY(customer_id) REFERENCES CUSTOMERS(customer_id),
+    FOREIGN KEY(room_id) REFERENCES ROOMS(room_id)
 );
 	-- -- END ABOOH -- --
 
