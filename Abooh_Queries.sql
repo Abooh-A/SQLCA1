@@ -36,7 +36,6 @@ SELECT
     D.dev_name,
     D.brand,
     D.warranty_end,
-    L.due_date,
     DATEDIFF(D.warranty_end, IF(L.return_date IS NULL AND L.loan_id IS NOT NULL, L.due_date, CURDATE())) AS days_until_warranty_expires,
     CASE
         WHEN DATEDIFF(D.warranty_end, IF(L.return_date IS NULL AND L.loan_id IS NOT NULL, L.due_date, CURDATE())) BETWEEN 0 AND 5   THEN 'CRITICAL (0-5 days)'
@@ -44,7 +43,7 @@ SELECT
         WHEN DATEDIFF(D.warranty_end, IF(L.return_date IS NULL AND L.loan_id IS NOT NULL, L.due_date, CURDATE())) BETWEEN 11 AND 20 THEN 'MEDIUM (11-20 days)'
         WHEN DATEDIFF(D.warranty_end, IF(L.return_date IS NULL AND L.loan_id IS NOT NULL, L.due_date, CURDATE())) BETWEEN 21 AND 30 THEN 'LOW (21-30 days)'
     END AS urgency_band,
-    CASE WHEN L.return_date IS NOT NULL THEN 'Out on Loan' ELSE 'Available' END AS loan_status
+    CASE WHEN L.return_date IS NULL THEN 'Out on Loan' ELSE 'Available' END AS loan_status
 FROM DEVICES D
 LEFT JOIN LOANS L ON D.serial_no = L.device_id
 WHERE DATEDIFF(D.warranty_end, IF(L.return_date IS NULL AND L.loan_id IS NOT NULL, L.due_date, CURDATE())) BETWEEN 0 AND 30
