@@ -1,9 +1,10 @@
 USE library_CA1_GroupE;
 
-
--- JULIETA - 1st QUERY - REPARATION NEEDED 
--- List of the books that need reparation, with the book id, status and location. Name of the book.  
--- If the book is not at the library, add the due date when they are going to be return.  
+/* -------------------------------------------------------------------------
+------> JULIETA - 1st QUERY - REPARATION NEEDED 
+- List of the books that need reparation, with the book id, status and location. Name of the book.  
+- If the book is not at the library, add the due date when they are going to be return.  
+------------------------------------------------------------------------- */
 
 SELECT bs.book_id AS BookID,
 c.condition_desc AS Book_Condition,
@@ -46,22 +47,21 @@ WHERE bs.condition_id = 5 -- Condition = Damaged
 ORDER BY bs.book_id; 
  
 
-
--- JULIETA - 2nd QUERY - MORE COPIES NEEDED --> needs more work
--- Get a list of books with just one copy. And the status of the book.  (The dummydata doesn't have results with just one copy, so I did it with 2)
--- And indicate the author and the supplier of the only copy (contact details as well), so it can be contacted and ask for more copies.  
--- Check how many requests this book has (from Waitlist) 
-
+/* -------------------------------------------------------------------------
+------>  JULIETA - 2nd QUERY - MORE COPIES NEEDED
+- Get a list of books with just one copy. And the status of the book.  (The dummydata doesn't have results with just one copy, so I did it with 2)
+- And indicate the author and the supplier of the only copy (contact details as well), so it can be contacted and ask for more copies.  
+- Check how many requests this book has (from Waitlist) 
+------------------------------------------------------------------------- */
 
 -- FINAL Query
 SELECT
-x.Copies,
 x.ISBN, 
 x.Book_Name,
 x.Edition, 
 x.Author,
 x.On_Waitlist,
-x.Last_Copy,
+x.Last_CopyID,
 sup.supplier_id AS LastCopy_SupplierID,
 sup.supplier_name AS Supplier_Name,
 sup.contact_person AS Contact_Name,
@@ -79,7 +79,7 @@ RIGHT JOIN ( -- Query to filter by ISBN with only 2 copies (Result: 46 rows)
 	b2.edition AS Edition, 
 	a2.author_name AS Author,
 	w2.On_Waitlist AS On_Waitlist,
-	MAX(bc2.book_id) AS Last_Copy
+	MAX(bc2.book_id) AS Last_CopyID
 
 	FROM BOOK_COPIES bc2
 
@@ -100,16 +100,15 @@ RIGHT JOIN ( -- Query to filter by ISBN with only 2 copies (Result: 46 rows)
 	
 	HAVING Copies = 2
 	
-) x ON bc.book_id = x.Last_Copy
+) x ON bc.book_id = x.Last_CopyID
 
 GROUP BY 
-x.Copies,
 x.ISBN, 
 x.Book_Name,
 x.Edition, 
 x.Author,
 x.On_Waitlist,
-x.Last_Copy,
+x.Last_CopyID,
 sup.supplier_id,
 sup.supplier_name,
 sup.contact_person,
@@ -129,10 +128,13 @@ GROUP BY isbn
 HAVING Copies = 2;
 
 
+/* -------------------------------------------------------------------------
+------> JULIETA - 3rd QUERY - POPULAR LANGUAGES
+- Check how many book for each languages. And indicate how many loans in total 
+every language has had (either they have been returned or not) 
+- Add number of tuples in Waitlist by languages.
+------------------------------------------------------------------------- */
 
--- JULIETA - 3rd QUERY -- POPULAR LANGUAGES
--- Check how many book for each languages. And indicate how many loans in total every language has had (either they have been returned or not) 
--- Add number of tuples in Waitlist by languages.
 SELECT 
 lan.language_book AS Book_Language,
 COUNT(*) AS Total_Books,
@@ -178,13 +180,13 @@ tw.Waitlist_per_Language
 ORDER BY Total_Books DESC;
 
 
-
--- JULIETA - 4th QUERY -- 4th REGULAR CUSTOMERS - In progress (Check the conditions and Next_Date_Due)
--- Enganging loyalty with the library community
--- Check the customers table and see how many books and how many devices they have borrowed. Order them by the highest amount of books borrowed.  
--- Indicate the day of the last loan. And depending on their owes, check if they are eligible and 
--- if they can get other invitations if they don't owe anything.
-
+/* -------------------------------------------------------------------------
+------> JULIETA - 4th QUERY -- 4th REGULAR CUSTOMERS 
+- Enganging loyalty with the library community
+- Check the customers table and see how many books and how many devices they have borrowed. Order them by the highest amount of books borrowed.  
+-  Indicate the day of the last loan. And depending on their owes, check if they are eligible and 
+-  if they can get other invitations if they don't owe anything.
+------------------------------------------------------------------------- */
 
 SELECT 
 l.customer_id AS Customer, 
@@ -197,11 +199,11 @@ COUNT(*) AS Total_Loans,
 SUM(CASE WHEN l.return_date IS NULL THEN 1 ELSE 0 END) AS Total_Owe, -- This add 1 per empty return date, meaning they have to return it yet.
 
 -- Next Due Date if they have anything to return
-CASE 
+/*CASE 
 	WHEN SUM(CASE WHEN l.return_date IS NULL THEN 1 ELSE 0 END) > 0 
     THEN MIN(CASE WHEN l.return_date IS NULL THEN l.due_date END) 
 	ELSE NULL END
-AS Next_Due_Date, 
+AS Next_Due_Date, */
 
 -- They are Eligible if zero overdue loans
 -- If the due date is not due yet, then they are eligible as well. 
@@ -234,10 +236,10 @@ CASE
     THEN "Invitation to Come Back" 
 
     ELSE NULL END
-AS Bonus,
+AS Extra
     
 -- Check Recent Activity 
-MAX(l.date_borrowed) AS Last_Borrowed
+-- MAX(l.date_borrowed) AS Last_Borrowed
     
 FROM LOANS l
 
