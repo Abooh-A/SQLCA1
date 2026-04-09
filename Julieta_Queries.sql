@@ -181,7 +181,7 @@ ORDER BY Total_Books DESC;
 
 
 /* -------------------------------------------------------------------------
-------> JULIETA - 4th QUERY -- 4th REGULAR CUSTOMERS 
+------> JULIETA - 4th QUERY - REGULAR CUSTOMERS 
 - Enganging loyalty with the library community
 - Check the customers table and see how many books and how many devices they have borrowed. Order them by the highest amount of books borrowed.  
 -  Indicate the day of the last loan. And depending on their owes, check if they are eligible and 
