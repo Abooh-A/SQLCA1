@@ -58,6 +58,12 @@ DELETE FROM `CUSTOMERS`;
 ALTER TABLE `CUSTOMERS` AUTO_INCREMENT = 1;
 
 -- fabricate-flush
+DELETE FROM `CUSTOMER_ADDRESSES`;
+
+-- fabricate-flush
+ALTER TABLE `CUSTOMER_ADDRESSES` AUTO_INCREMENT = 1;
+
+-- fabricate-flush
 DELETE FROM `DEPARTMENTS`;
 
 -- fabricate-flush
@@ -1730,7 +1736,7 @@ INSERT INTO `DEVICE_STATUS` (`serial_no`, `status_id`, `descriptions`, `last_upd
 
 -- INSERT: DEVICES
 INSERT INTO `DEVICES` (`serial_no`, `dev_name`, `brand`, `cost`, `warranty_end`, `supplier_id`) VALUES
-('LPT-YEYWJ5GEI9', 'Laptop 1', 'Lenovo', 814.24, '2028-09-01', 7),
+('LPT-YEYWJ5GEI9', 'Laptop 1', 'Lenovo', 814.24, '2026-05-10', 7),
 ('LPT-YEYWCJOOPU', 'Laptop 2', 'Dell', 613.67, '2025-09-01', 18),
 ('LPT-YEYXOZKEUF', 'Laptop 3', 'ASUS', 1019.54, '2027-03-01', 20),
 ('LPT-YEYXXR6E2O', 'Laptop 4', 'Apple', 955.04, '2024-12-01', 19),
@@ -1738,7 +1744,7 @@ INSERT INTO `DEVICES` (`serial_no`, `dev_name`, `brand`, `cost`, `warranty_end`,
 ('LPT-YEYXTV1HJS', 'Laptop 6', 'Acer', 854.93, '2026-10-01', 12),
 ('LPT-YEYXNCBGF7', 'Laptop 7', 'Lenovo', 460.93, '2025-09-01', 8),
 ('LPT-YEYXHAUPML', 'Laptop 8', 'Acer', 768.01, '2027-06-01', 14),
-('LPT-YEYXRA9CVW', 'Laptop 9', 'ASUS', 729.04, '2027-09-01', 3),
+('LPT-YEYXRA9CVW', 'Laptop 9', 'ASUS', 729.04, '2026-05-02', 3),
 ('LPT-YEYXAGBP40', 'Laptop 10', 'HP', 610.84, '2027-09-01', 8),
 ('LPT-YEYX1HY0OD', 'Laptop 11', 'Acer', 1180.78, '2026-11-01', 13),
 ('LPT-YEYXH68KV9', 'Laptop 12', 'HP', 762.61, '2024-08-01', 8),
@@ -1759,7 +1765,7 @@ INSERT INTO `DEVICES` (`serial_no`, `dev_name`, `brand`, `cost`, `warranty_end`,
 ('TAB-YEYX3RSXKG', 'Tablet 2', 'Lenovo Tab', 354.32, '2026-06-01', 10),
 ('TAB-YEYXUJCJGW', 'Tablet 3', 'Apple iPad', 251.6, '2026-04-01', 1),
 ('TAB-YEYX9D9MLO', 'Tablet 4', 'Amazon Fire', 486.01, '2025-10-01', 14),
-('TAB-YEYXORJ3UA', 'Tablet 5', 'Amazon Fire', 433.95, '2027-09-01', 9),
+('TAB-YEYXORJ3UA', 'Tablet 5', 'Amazon Fire', 433.95, '2026-05-15', 9),
 ('TAB-YEYXEQOJPG', 'Tablet 6', 'Samsung Galaxy Tab', 526.45, '2027-12-01', 7),
 ('TAB-YEYXZ6SA1E', 'Tablet 7', 'Amazon Fire', 275.31, '2028-03-01', 10),
 ('TAB-YEYX9SNYLW', 'Tablet 8', 'Lenovo Tab', 667.79, '2026-09-01', 7),
@@ -1770,7 +1776,7 @@ INSERT INTO `DEVICES` (`serial_no`, `dev_name`, `brand`, `cost`, `warranty_end`,
 ('TAB-YEYXQ0INQL', 'Tablet 13', 'Samsung Galaxy Tab', 678.2, '2026-07-01', 15),
 ('TAB-YEYXX6B1XR', 'Tablet 14', 'Apple iPad', 245.76, '2028-01-01', 11),
 ('TAB-YEYXFU24B1', 'Tablet 15', 'Amazon Fire', 341.4, '2026-04-01', 2),
-('TAB-YEYX6A6M0X', 'Tablet 16', 'Apple iPad', 577.39, '2026-10-01', 9),
+('TAB-YEYX6A6M0X', 'Tablet 16', 'Apple iPad', 577.39, '2026-05-20', 9),
 ('TAB-YEYX49PLZZ', 'Tablet 17', 'Lenovo Tab', 215.03, '2025-02-01', 4),
 ('TAB-YEYX1FT6ZO', 'Tablet 18', 'Samsung Galaxy Tab', 421.58, '2026-05-01', 13),
 ('TAB-YEYXWFZOVN', 'Tablet 19', 'Lenovo Tab', 238.14, '2026-12-01', 7),
@@ -1778,8 +1784,8 @@ INSERT INTO `DEVICES` (`serial_no`, `dev_name`, `brand`, `cost`, `warranty_end`,
 ('ERD-YEYXWZSS44', 'E-Reader 1', 'Amazon Kindle', 227.14, '2026-07-01', 1),
 ('ERD-YEYXI46K3D', 'E-Reader 2', 'Amazon Kindle', 105.13, '2026-01-01', 12),
 ('ERD-YEYXK7R888', 'E-Reader 3', 'Kobo', 213.66, '2024-06-01', 12),
-('ERD-YEYXJK5Y8V', 'E-Reader 4', 'PocketBook', 164.23, '2025-03-01', 3),
-('ERD-YEYXRR4HTU', 'E-Reader 5', 'Amazon Kindle', 145.93, '2026-04-01', 16),
+('ERD-YEYXJK5Y8V', 'E-Reader 4', 'PocketBook', 164.23, '2026-05-18', 3),
+('ERD-YEYXRR4HTU', 'E-Reader 5', 'Amazon Kindle', 145.93, '2026-04-14', 16),
 ('ERD-YEYXEHUMP2', 'E-Reader 6', 'Amazon Kindle', 127.89, '2028-11-01', 16),
 ('ERD-YEYX3PYII6', 'E-Reader 7', 'Amazon Kindle', 181.74, '2026-05-01', 11),
 ('ERD-YEYX3OJAY1', 'E-Reader 8', 'Amazon Kindle', 192.19, '2026-03-01', 16),
@@ -1792,16 +1798,16 @@ INSERT INTO `DEVICES` (`serial_no`, `dev_name`, `brand`, `cost`, `warranty_end`,
 ('ERD-YEYXVYAKTL', 'E-Reader 15', 'Kobo', 249.84, '2028-07-01', 18),
 ('CHR-YEYXZ2FBEH', 'Chromebook 1', 'Samsung', 360.33, '2028-05-01', 7),
 ('CHR-YEYXERWPSY', 'Chromebook 2', 'HP', 242.79, '2027-03-01', 20),
-('CHR-YEYXHBC3S7', 'Chromebook 3', 'HP', 406.8, '2027-04-01', 17),
+('CHR-YEYXHBC3S7', 'Chromebook 3', 'HP', 406.8, '2026-04-17', 17),
 ('CHR-YEYXZXEPG5', 'Chromebook 4', 'ASUS', 375.95, '2027-03-01', 12),
-('CHR-YEYX3PHC1H', 'Chromebook 5', 'Lenovo', 293.19, '2026-06-01', 15),
+('CHR-YEYX3PHC1H', 'Chromebook 5', 'Lenovo', 293.19, '2026-04-15', 15),
 ('CHR-YEYXZJO4P4', 'Chromebook 6', 'Samsung', 321.04, '2025-09-01', 19),
-('CHR-YEYX408H8Z', 'Chromebook 7', 'Acer', 279.82, '2026-04-01', 20),
-('CHR-YEYXW1LLEF', 'Chromebook 8', 'Samsung', 373.06, '2027-04-01', 7),
-('CHR-YEYXY3XTCG', 'Chromebook 9', 'ASUS', 243.67, '2026-08-01', 14),
+('CHR-YEYX408H8Z', 'Chromebook 7', 'Acer', 279.82, '2026-04-22', 20),
+('CHR-YEYXW1LLEF', 'Chromebook 8', 'Samsung', 373.06, '2026-04-22', 7),
+('CHR-YEYXY3XTCG', 'Chromebook 9', 'ASUS', 243.67, '2026-05-02', 14),
 ('CHR-YEYXYYMSNS', 'Chromebook 10', 'Acer', 245.96, '2026-08-01', 1),
 ('CHR-YEYX5RDQWV', 'Chromebook 11', 'Lenovo', 359.52, '2026-08-01', 16),
-('CHR-YEYXMTUT54', 'Chromebook 12', 'Lenovo', 312.51, '2026-01-01', 6),
+('CHR-YEYXMTUT54', 'Chromebook 12', 'Lenovo', 312.51, '2026-04-25', 6),
 ('HPH-YEYXKDCKD9', 'Headphones 1', 'Sony', 342.38, '2025-10-01', 8),
 ('HPH-YEYXBPUNNP', 'Headphones 2', 'JBL', 97.54, '2026-12-01', 13),
 ('HPH-YEYXVZPNE7', 'Headphones 3', 'Sony', 142.54, '2026-04-01', 15),
