@@ -9,7 +9,7 @@ SELECT bs.book_id AS BookID,
 c.condition_desc AS Book_Condition,
 b.book_name AS Book,
 s.status_desc AS Book_Status,
-l.loan_id AS LoanID,
+l.loan_id AS LoanID, -- To have the ID at hand in case needed to check or be modified
 l.due_date AS Due_Date,
 
 CASE 
