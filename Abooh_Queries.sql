@@ -27,8 +27,9 @@ ORDER BY total_fines DESC;
 
 /* -------------------------------------------------------------------------
 	QUERY 2: Device Warranty Alert
-	Devices currently on loan that need to be looked over for any damage
-    grouped by urgency based on days remaining between due date and warranty expiry
+	Devices that need to be checked for damage then filters those that are 
+    currently on loan that need to be looked over for any damage grouped by
+    urgency based on days remaining between due date and warranty expiry
   -------------------------------------------------------------------------*/
 SELECT
     D.serial_no,
@@ -36,17 +37,17 @@ SELECT
     D.brand,
     D.warranty_end,
     L.due_date,
-    DATEDIFF(D.warranty_end, L.due_date) AS days_until_warranty_expires,
+    DATEDIFF(D.warranty_end, IF(L.return_date IS NULL AND L.loan_id IS NOT NULL, L.due_date, CURDATE())) AS days_until_warranty_expires,
     CASE
-        WHEN DATEDIFF(D.warranty_end, L.due_date) BETWEEN 0 AND 5   THEN 'CRITICAL (0-5 days)'
-        WHEN DATEDIFF(D.warranty_end, L.due_date) BETWEEN 6 AND 10  THEN 'HIGH (6-10 days)'
-        WHEN DATEDIFF(D.warranty_end, L.due_date) BETWEEN 11 AND 20 THEN 'MEDIUM (11-20 days)'
-        WHEN DATEDIFF(D.warranty_end, L.due_date) BETWEEN 21 AND 30 THEN 'LOW (21-30 days)'
-    END AS urgency_band
+        WHEN DATEDIFF(D.warranty_end, IF(L.return_date IS NULL AND L.loan_id IS NOT NULL, L.due_date, CURDATE())) BETWEEN 0 AND 5   THEN 'CRITICAL (0-5 days)'
+        WHEN DATEDIFF(D.warranty_end, IF(L.return_date IS NULL AND L.loan_id IS NOT NULL, L.due_date, CURDATE())) BETWEEN 6 AND 10  THEN 'HIGH (6-10 days)'
+        WHEN DATEDIFF(D.warranty_end, IF(L.return_date IS NULL AND L.loan_id IS NOT NULL, L.due_date, CURDATE())) BETWEEN 11 AND 20 THEN 'MEDIUM (11-20 days)'
+        WHEN DATEDIFF(D.warranty_end, IF(L.return_date IS NULL AND L.loan_id IS NOT NULL, L.due_date, CURDATE())) BETWEEN 21 AND 30 THEN 'LOW (21-30 days)'
+    END AS urgency_band,
+    CASE WHEN L.return_date IS NOT NULL THEN 'Out on Loan' ELSE 'Available' END AS loan_status
 FROM DEVICES D
-JOIN LOANS L ON D.serial_no = L.device_id
-WHERE L.return_date IS NULL
-AND DATEDIFF(D.warranty_end, L.due_date) BETWEEN 0 AND 30
+LEFT JOIN LOANS L ON D.serial_no = L.device_id
+WHERE DATEDIFF(D.warranty_end, IF(L.return_date IS NULL AND L.loan_id IS NOT NULL, L.due_date, CURDATE())) BETWEEN 0 AND 30
 ORDER BY days_until_warranty_expires ASC;
 
 
