@@ -1,4 +1,5 @@
 USE library_CA1_GroupE;
+
 -- ABOOH QUERIES
 /* -------------------------------------------------------------------------
 	QUERY 1: Bad Borrowers
@@ -36,7 +37,6 @@ SELECT
     D.dev_name,
     D.brand,
     D.warranty_end,
-    L.due_date,
     DATEDIFF(D.warranty_end, IF(L.return_date IS NULL AND L.loan_id IS NOT NULL, L.due_date, CURDATE())) AS days_until_warranty_expires,
     CASE
         WHEN DATEDIFF(D.warranty_end, IF(L.return_date IS NULL AND L.loan_id IS NOT NULL, L.due_date, CURDATE())) BETWEEN 0 AND 5   THEN 'CRITICAL (0-5 days)'
@@ -44,7 +44,7 @@ SELECT
         WHEN DATEDIFF(D.warranty_end, IF(L.return_date IS NULL AND L.loan_id IS NOT NULL, L.due_date, CURDATE())) BETWEEN 11 AND 20 THEN 'MEDIUM (11-20 days)'
         WHEN DATEDIFF(D.warranty_end, IF(L.return_date IS NULL AND L.loan_id IS NOT NULL, L.due_date, CURDATE())) BETWEEN 21 AND 30 THEN 'LOW (21-30 days)'
     END AS urgency_band,
-    CASE WHEN L.return_date IS NOT NULL THEN 'Out on Loan' ELSE 'Available' END AS loan_status
+    CASE WHEN L.return_date IS NULL THEN 'Out on Loan' ELSE 'Available' END AS loan_status
 FROM DEVICES D
 LEFT JOIN LOANS L ON D.serial_no = L.device_id
 WHERE DATEDIFF(D.warranty_end, IF(L.return_date IS NULL AND L.loan_id IS NOT NULL, L.due_date, CURDATE())) BETWEEN 0 AND 30
@@ -76,3 +76,32 @@ FROM (
 ) AS combined_events
 GROUP BY day_of_week
 ORDER BY total_events DESC;
+
+
+/* -------------------------------------------------------------------------
+	QUERY 4: Bad Condition Device Assignment
+	Retrieves all devices in bad condition alongside their current room 
+	location and status, then assigns the newest IT Support staff member 
+	as the responsible person for inspection and repair
+  -------------------------------------------------------------------------*/
+SELECT 
+	DS.serial_no,
+    D.dev_name,
+    S.status_desc,
+	DS.descriptions,
+	C.condition_desc,
+	R.room_name,
+    assigned_staff.assigned_staff
+FROM DEVICE_STATUS ds
+JOIN STATUSES s on ds.status_id = s.status_id
+JOIN ROOMS R on DS.room_id = R.room_id
+JOIN DEVICES D on D.serial_no = DS.serial_no
+JOIN CONDITIONS C on C.condition_id = DS.condition_id
+CROSS JOIN (SELECT 
+		    CONCAT(SI.f_name, ' ', SI.l_name) AS assigned_staff
+			FROM STAFF_INFO SI
+			JOIN STAFF_HR SH ON SH.staff_id = SI.staff_id
+			WHERE SH.staff_role = 'IT Support'
+			ORDER BY SI.start_date DESC
+			LIMIT 1) AS assigned_staff
+WHERE DS.condition_id = 4 OR DS.condition_id = 5;
