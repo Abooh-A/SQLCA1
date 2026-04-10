@@ -1,4 +1,5 @@
 USE library_CA1_GroupE;
+
 -- ABOOH QUERIES
 /* -------------------------------------------------------------------------
 	QUERY 1: Bad Borrowers
@@ -76,9 +77,13 @@ FROM (
 GROUP BY day_of_week
 ORDER BY total_events DESC;
 
--- Query 4
--- POOR device rooms assign to staff
 
+/* -------------------------------------------------------------------------
+	QUERY 4: Bad Condition Device Assignment
+	Retrieves all devices in bad condition alongside their current room 
+	location and status, then assigns the newest IT Support staff member 
+	as the responsible person for inspection and repair
+  -------------------------------------------------------------------------*/
 SELECT 
 	DS.serial_no,
     D.dev_name,
@@ -93,10 +98,10 @@ JOIN ROOMS R on DS.room_id = R.room_id
 JOIN DEVICES D on D.serial_no = DS.serial_no
 JOIN CONDITIONS C on C.condition_id = DS.condition_id
 CROSS JOIN (SELECT 
-    CONCAT(SI.f_name, ' ', SI.l_name) AS assigned_staff
-	FROM STAFF_INFO SI
-	JOIN STAFF_HR SH ON SH.staff_id = SI.staff_id
-	WHERE SH.staff_role = 'IT Support'
-	ORDER BY SI.start_date ASC
-	LIMIT 1) AS assigned_staff
+		    CONCAT(SI.f_name, ' ', SI.l_name) AS assigned_staff
+			FROM STAFF_INFO SI
+			JOIN STAFF_HR SH ON SH.staff_id = SI.staff_id
+			WHERE SH.staff_role = 'IT Support'
+			ORDER BY SI.start_date DESC
+			LIMIT 1) AS assigned_staff
 WHERE DS.condition_id = 4 OR DS.condition_id = 5;
