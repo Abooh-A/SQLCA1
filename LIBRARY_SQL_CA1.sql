@@ -201,7 +201,7 @@ CREATE TABLE FINES(
 CREATE TABLE WAITLIST(
 	waitlist_id INT AUTO_INCREMENT PRIMARY KEY,
 	customer_id INT,
-	isbn VARCHAR(30),
+	isbn VARCHAR(13),
 	request_date DATE,
 
 	FOREIGN KEY(customer_id) REFERENCES CUSTOMERS(customer_id),
