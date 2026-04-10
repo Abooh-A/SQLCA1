@@ -229,6 +229,7 @@ CREATE TABLE STAFF_INFO (
 	f_name VARCHAR(30) NOT NULL,
 	l_name VARCHAR(30) NOT NULL,
 	ppsn VARCHAR(30) NOT NULL,
+    date_of_birth DATE,
 	start_date DATE
 );
 
