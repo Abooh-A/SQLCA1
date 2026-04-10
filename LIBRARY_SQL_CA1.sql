@@ -284,10 +284,9 @@ CREATE TABLE ADDRESSES(
 -- ABOOH QUERIES
 /* -------------------------------------------------------------------------
 	ABOOH QUERY 1: Bad Borrowers
-	Customers with total built up fines over €50, flagged against waitlist
+	Customers with total built up fines over €20, flagged against waitlist
     entries and room reservations for removal. But still showing those with 
     large fine amounts even if not on waitlist.
-    - flaw we have no way to track if theyve payed their fine?
    ------------------------------------------------------------------------- */
 SELECT
     C.customer_id,
