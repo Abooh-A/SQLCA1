@@ -264,3 +264,4 @@ SELECT *
 FROM LOANS
 HAVING customer_id = 83;
 
+
