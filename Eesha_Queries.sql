@@ -5,8 +5,8 @@ identify how much money is owed by people who are already banned (restricted) */
 USE library_CA1_GroupE;
 
 SELECT 
-    C.fname,   
-    C.lname,   
+    C.f_name,   
+    C.l_name,  
     SUM(F.fine_amount) AS total_debt_owed,
     CASE 
         WHEN SUM(F.fine_amount) > 15.00 THEN 'RESTRICTED'
@@ -14,9 +14,9 @@ SELECT
     END AS account_status
 FROM CUSTOMERS C
 JOIN LOANS L ON C.customer_id = L.customer_id
-JOIN FINES F ON DATEDIFF(L.date_returned, L.date_due) = F.days_overdue
-WHERE L.date_returned > L.date_due
-GROUP BY C.customer_id, C.fname, C.lname
+JOIN FINES F ON DATEDIFF(L.return_date, L.due_date) = F.length_overdue
+WHERE L.return_date > L.due_date
+GROUP BY C.customer_id, C.f_name, C.l_name
 HAVING SUM(F.fine_amount) > 0.00;
 
 /* query 2: budget replacement forecast
