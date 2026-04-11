@@ -1,6 +1,6 @@
 -- eesha queries
-/* query 1: dead debt
-identify how much money is owed by people who are already banned (restricted) */
+/* query 1: restricted members
+Determining the financial status of customer accounts. if they have a fine above 15 euro, they are restricted*/
 
 USE library_CA1_GroupE;
 SELECT 
