@@ -1,9 +1,8 @@
-USE library_CA1_GroupE;
 -- eesha queries
 /* query 1: dead debt
 identify how much money is owed by people who are already banned (restricted) */
-USE library_CA1_GroupE;
 
+USE library_CA1_GroupE;
 SELECT 
     C.f_name,   
     C.l_name,  
