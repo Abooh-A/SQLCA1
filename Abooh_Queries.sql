@@ -44,10 +44,12 @@ SELECT
         WHEN DATEDIFF(D.warranty_end, IF(L.return_date IS NULL AND L.loan_id IS NOT NULL, L.due_date, CURDATE())) BETWEEN 11 AND 20 THEN 'MEDIUM (11-20 days)'
         WHEN DATEDIFF(D.warranty_end, IF(L.return_date IS NULL AND L.loan_id IS NOT NULL, L.due_date, CURDATE())) BETWEEN 21 AND 30 THEN 'LOW (21-30 days)'
     END AS urgency_band,
-    CASE WHEN L.return_date IS NULL THEN 'Out on Loan' ELSE 'Available' END AS loan_status
+    CASE WHEN L.return_date IS NULL THEN 'Out on Loan' ELSE 'Available' END AS loan_status,
+    MAX(L.date_borrowed) AS last_borrowed
 FROM DEVICES D
 LEFT JOIN LOANS L ON D.serial_no = L.device_id
 WHERE DATEDIFF(D.warranty_end, IF(L.return_date IS NULL AND L.loan_id IS NOT NULL, L.due_date, CURDATE())) BETWEEN 0 AND 30
+GROUP BY D.serial_no, D.dev_name, D.brand, D.warranty_end, days_until_warranty_expires, urgency_band, loan_status
 ORDER BY days_until_warranty_expires ASC;
 
 
@@ -58,21 +60,24 @@ ORDER BY days_until_warranty_expires ASC;
    ------------------------------------------------------------------------- */
 SELECT
     day_of_week,
-    COUNT(*) AS total_events
+    COUNT(*) AS total_events,
+    COUNT(DISTINCT customer_id) AS customers_per_day
 FROM (
     SELECT
-        DAYNAME(L.date_borrowed) AS day_of_week
+        DAYNAME(L.date_borrowed) AS day_of_week,
+		C.customer_id
     FROM LOANS L
-    JOIN CUSTOMERS C ON L.customer_id = C.customer_id
+    JOIN CUSTOMERS C ON C.customer_id = L.customer_id
     WHERE YEAR(L.date_borrowed) = YEAR(CURDATE())
 
     UNION ALL
 
     SELECT
-        DAYNAME(R.res_start) AS day_of_week
-    FROM ROOM_RESERVATIONS R
-    JOIN CUSTOMERS C ON R.customer_id = C.customer_id
-    WHERE YEAR(R.res_start) = YEAR(CURDATE())
+        DAYNAME(RR.res_start) AS day_of_week,
+        C.customer_id
+    FROM ROOM_RESERVATIONS RR
+    JOIN CUSTOMERS C ON C.customer_id = RR.customer_id
+    WHERE YEAR(RR.res_start) = YEAR(CURDATE())
 ) AS combined_events
 GROUP BY day_of_week
 ORDER BY total_events DESC;
