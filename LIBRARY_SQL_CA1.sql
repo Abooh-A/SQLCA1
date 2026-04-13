@@ -398,7 +398,7 @@ WHERE DS.condition_id = 4 OR DS.condition_id = 5;
 	JULIETA 1st QUERY: REPARATION NEEDED 
 	- List of the books that need reparation, with the book id, status and location. Name of the book.  
 	- If the book is not at the library, add the due date when they are going to be return.  
-------------------------------------------------------------------------- */
+	------------------------------------------------------------------------- */
 
 SELECT bs.book_id AS BookID,
 c.condition_desc AS Book_Condition,
@@ -446,7 +446,7 @@ ORDER BY bs.book_id;
 	- Get a list of books with just one copy. And the status of the book.  (The dummydata doesn't have results with just one copy, so I did it with 2)
 	- And indicate the author and the supplier of the only copy (contact details as well), so it can be contacted and ask for more copies.  
 	- Check how many requests this book has (from Waitlist) 
-------------------------------------------------------------------------- */
+	------------------------------------------------------------------------- */
 
 -- FINAL Query
 SELECT
@@ -527,7 +527,7 @@ HAVING Copies = 2;
 	- Check how many book for each languages. And indicate how many loans in total 
 	every language has had (either they have been returned or not) 
 	- Add number of tuples in Waitlist by languages.
-------------------------------------------------------------------------- */
+	------------------------------------------------------------------------- */
 
 SELECT 
 lan.language_book AS Book_Language,
@@ -580,7 +580,7 @@ ORDER BY Total_Books DESC;
 	- Check the customers table and see how many books and how many devices they have borrowed. Order them by the highest amount of books borrowed.  
 	- Indicate the day of the last loan. And depending on their owes, check if they are eligible and if they can get other 
     invitations if they don't owe anything.
-------------------------------------------------------------------------- */
+	------------------------------------------------------------------------- */
 
 SELECT 
 l.customer_id AS Customer, 
@@ -659,10 +659,11 @@ FROM LOANS
 HAVING customer_id = 83;
 
 /* -------------------------------------------------------------------------
-eesha query 1: department staffing costs
-This query shows how much the library is spending on staff in each department.
-It helps the manager see which teams (like "IT Support" or "Customer Service") are the most expensive to run.
-------------------------------------------------------------------------- */
+	EESHA QUERY 1: Department Staffing Costs
+	This query shows how much the library is spending on staff in each department.
+	It helps the manager see which teams (like "IT Support" or "Customer Service") 
+	are the most expensive to run.
+	------------------------------------------------------------------------ */
 
 SELECT 
     D.dep_name AS Department,
@@ -680,10 +681,11 @@ GROUP BY D.dep_name
 ORDER BY total_payroll DESC;
 
 /* ------------------------------------------------------------------------- 
-eesha query 2: value of equipment in each room
-This query adds up the price of all computers and devices in each room. 
-It helps the library decide which rooms need extra security or better locks because they contain expensive equipment. 
-------------------------------------------------------------------------- */
+	EESHA QUERY 2: Value of Equipment in Each Room
+	This query adds up the price of all computers and devices in each room. 
+	It helps the library decide which rooms need extra security or better 
+	locks because they contain expensive equipment. 
+	------------------------------------------------------------------------- */
 
 SELECT 
     R.room_name,
@@ -703,10 +705,10 @@ HAVING total_asset_value > 0
 ORDER BY total_asset_value DESC;
 
 /* -------------------------------------------------------------------------
-eesha query 3: department revenue reports
-see which staff departments are handling the items that generate the most fines; 
-helps see where most late returns are happening. 
-------------------------------------------------------------------------- */
+	EESHA QUERY 3: Department Revenue Reports
+	See which staff departments are handling the items that generate the most fines; 
+	helps see where most late returns are happening. 
+	------------------------------------------------------------------------- */
 
 SELECT 
     CASE 
@@ -724,9 +726,9 @@ GROUP BY department_responsible
 ORDER BY total_fine_revenue DESC;
 
 /* -------------------------------------------------------------------------
-eesha query 4: county financial risk
-which county have more 'bad borrowers' than others 
-------------------------------------------------------------------------- */
+	EESHA QUERY 4: County Financial Risk
+	Which counties have more 'bad borrowers' than others 
+	------------------------------------------------------------------------- */
 
 SELECT 
     A.county AS county_name, 
