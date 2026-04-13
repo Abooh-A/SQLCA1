@@ -22,14 +22,14 @@ CREATE TABLE BOOK_LOCATION(
 -- list of different conditions
 CREATE TABLE CONDITIONS(
 	condition_id INT AUTO_INCREMENT PRIMARY KEY,
-	condition_desc VARCHAR(20)
+	condition_desc VARCHAR(20) NOT NULL
 );
 
 -- STATUSES TABLE (JULIETA) --> used by Books and Devices
 -- list of different statuses 
 CREATE TABLE STATUSES(
 	status_id INT AUTO_INCREMENT PRIMARY KEY,
-	status_desc VARCHAR(20)
+	status_desc VARCHAR(20) NOT NULL
 );
 
 -- PUBLISHERS TABLE (JULIETA)
@@ -60,14 +60,14 @@ CREATE TABLE SUPPLIERS(
 -- list of languages
 CREATE TABLE LANGUAGES(
 	language_id INT AUTO_INCREMENT PRIMARY KEY,
-	language_book VARCHAR(20)
+	language_book VARCHAR(20) NOT NULL
 );
 
 -- GENRE TABLE (JULIETA)
 -- list of genres 
 CREATE TABLE GENRES(
 	genre_id INT AUTO_INCREMENT PRIMARY KEY,
-	genre VARCHAR(20)
+	genre VARCHAR(20) NOT NULL
 );
 
 -- BOOKS TABLE (JULIETA)
@@ -194,7 +194,7 @@ CREATE TABLE LOANS(
 -- FINES TABLE (ABOOH)
 CREATE TABLE FINES(
 	length_overdue INT PRIMARY KEY,
-	fine_amount DECIMAL(10, 2)
+	fine_amount DECIMAL(10, 2) NOT NULL
 );
 
 -- WAITLIST TABLE (ABOOH)
