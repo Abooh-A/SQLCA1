@@ -706,7 +706,7 @@ ORDER BY total_asset_value DESC;
 
 /* -------------------------------------------------------------------------
 	EESHA QUERY 3: Department Revenue Reports
-	See which staff departments are handling the items that generate the most fines; 
+	See what items generates the most fines; 
 	helps see where most late returns are happening. 
 	------------------------------------------------------------------------- */
 
